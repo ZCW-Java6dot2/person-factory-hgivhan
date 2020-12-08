@@ -3,9 +3,9 @@ package com.zipcodewilmington.streams.anthropoid;
 import com.zipcodewilmington.streams.tools.RandomUtils;
 import com.zipcodewilmington.streams.tools.StringUtils;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -14,6 +14,7 @@ import java.util.stream.Stream;
  * @ATTENTION_TO_STUDENTS You are FORBIDDEN from using loops of any sort within the definition of this class.
  */
 public final class PersonFactory {
+
     public PersonFactory() {
         /** this class is not to be instantiated */
     }
@@ -39,16 +40,33 @@ public final class PersonFactory {
      * @return - ArrayList of Person objects
      */ // TODO
     public List<Person> createPersonList(int listSize) {
-        return null;
+        return new ArrayList<Person>(Collections.nCopies(listSize, createRandomPerson()));
     }
+
+//        this works, but maybe I shouldn't be looping at all, even with stream version below?
+//        List<Person> personList = new ArrayList<>();
+//        IntStream.range(0, listSize)
+//                .mapToObj(p -> createRandomPerson())
+//                .forEach(personList::add);
+//        return personList;
 
 
     /**
      * @param arrayLength - number of Person objects to create
-     * @return - Array of Person objects
+     * @return - Array of Person object
      */ // TODO
     public Person[] createPersonArray(int arrayLength) {
-        return null;
+        return createPersonStream(arrayLength).toArray(Person[]::new); // wow, can use method below
+//        Below does not work.
+//        Person[] personArray = new Person[arrayLength];
+//        List<Person> personList = Arrays.asList(personArray);
+//        IntStream.range(0, personList.size())
+//                .mapToObj(p -> createRandomPerson())
+//                .forEach(personList::add);
+//                //Stream<Person> stream =
+//        //Arrays.stream(personArray).forEach(p-> createRandomPerson());
+//        return (Person[]) personList.toArray();
+
     }
 
 
@@ -59,6 +77,7 @@ public final class PersonFactory {
      * @return - Stream representation of collection of Person objects
      */ // TODO
     public Stream<Person> createPersonStream(int streamCount) {
-        return null;
+        Stream<Person> personStream = createPersonList(streamCount).stream();
+    return personStream;
     }
 }
